@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+#
+# Build Index
+# Builds directory listing index
+#
+# Ashen Gunaratne
+# mail@ashenm.ml
+#
+
+from datetime import datetime, timezone
+from hashlib import md5
+from os.path import join
+from xml.etree.ElementTree import Element, SubElement, tostring
+
+EXCLUDES = [ 'index.xml', 'status.xml' ]
+
+with open(join('.', '.github', 'scripts', 'digest')) as module:
+  exec(module.read())
+
+def index(collections):
+
+  blobs = Element('Blobs')
+
+  for collection in collections:
+
+    filename, stats = collection
+
+    blob = SubElement(blobs, 'Blob')
+    key = SubElement(blob, 'Key')
+    lastmod = SubElement(blob, 'LastModified')
+    size = SubElement(blob, 'Size')
+    etag = SubElement(blob, 'ETag')
+
+    key.text = filename
+    lastmod.text = datetime.fromtimestamp(stats.st_mtime, tz=timezone.utc).isoformat()
+    size.text = str(stats.st_size)
+    etag.text = digest(filename, function=md5)
+
+  return tostring(blobs, 'utf-8')
+
+if __name__ == '__main__':
+
+  from glob import iglob
+  from os import stat
+  from xml.dom.minidom import parseString
+
+  refs = filter(lambda f: f not in EXCLUDES, iglob('*???.???*'))
+  refs = map(lambda f: (f, stat(f)), refs)
+
+  with open('index.xml', mode='wb') as stream:
+    stream.write(parseString(index(refs)).toprettyxml(indent='  ', newl='\r\n', encoding='UTF-8'))
+
+# vim: set expandtab shiftwidth=2 syntax=python:

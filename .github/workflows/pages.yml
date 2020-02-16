@@ -1,0 +1,68 @@
+name: GitHub Pages
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+
+  # build index listing
+  index:
+    name: Build Index
+    steps:
+      - uses: actions/checkout@v2
+      - run: ./.github/scripts/index
+      - uses: actions/upload-artifact@v1
+        with:
+          name: index.xml
+          path: index.xml
+    runs-on: ubuntu-latest
+
+  # compute file digests
+  digest:
+    name: Digest Files
+    steps:
+      - uses: actions/checkout@v2
+      - run: find ${GITHUB_WORKSPACE:-.} -maxdepth 1 -type f -name '*???.???*' \! -name 'status.xml' -exec ./.github/scripts/digest {} \;
+      - run: tar --xz --create --file digests.txz *.md5 *.sha256
+      - uses: actions/upload-artifact@v1
+        with:
+          name: digests.txz
+          path: digests.txz
+    runs-on: ubuntu-latest
+
+  # publish gh-pages
+  push:
+    name: Publish Pages
+    needs: [ digest, index ]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v1
+        with:
+          name: index.xml
+          path: /home/runner/work/blob/blob
+      - uses: actions/download-artifact@v1
+        with:
+          name: digests.txz
+          path: /tmp
+      - run: |
+          tar --xz --extract --file /tmp/digests.txz
+          mkdir --parent /tmp/build
+          rsync --delete --links --recursive --exclude .git --exclude .github ${GITHUB_WORKSPACE:-.}/ /tmp/build
+      - run: |
+          git init
+          git checkout --orphan gh-pages
+          git config user.email "mail@ashenm.ml"
+          git config user.name "Ashen Gunaratne"
+          echo "blob.ashenm.ml" | tee CNAME
+          git add --all .
+          git commit --quiet --message "Deploy blob.ashenm.ml to github.com/ashenm/blob.git:gh-pages"
+          git push --force --quiet "https://${GITHUB_TOKEN:?Invalid Token}@github.com/ashenm/blob.git" "gh-pages:gh-pages"
+          git show --stat-count=10 HEAD
+        working-directory: /tmp/build
+    env:
+      GITHUB_TOKEN: ${{ secrets.ENDPOINT_TOKEN }}
+    runs-on: ubuntu-latest
+
+# vim: set expandtab shiftwidth=2 syntax=yaml:
