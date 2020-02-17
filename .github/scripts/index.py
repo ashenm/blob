@@ -8,6 +8,7 @@
 #
 
 from datetime import datetime, timezone
+from digest import digest
 from hashlib import md5, sha256
 from importlib.util import module_from_spec, spec_from_file_location
 from os import stat
@@ -16,11 +17,6 @@ from subprocess import PIPE, CalledProcessError, run
 from xml.etree.ElementTree import Element, SubElement, tostring
 
 EXCLUDES = [ 'index.xml', 'status.xml' ]
-
-spec = spec_from_file_location('digest', join('.', '.github', 'scripts', 'digest.py'))
-digest = module_from_spec(spec)
-
-spec.loader.exec_module(digest)
 
 def stats(filename):
 
@@ -46,8 +42,8 @@ def index(collections):
     filename, stats = collection
 
     blob = SubElement(blobs, 'Blob', {
-      'md5': digest.digest(filename, function=md5),
-      'sha256': digest.digest(filename, function=sha256)
+      'md5': digest(filename, function=md5),
+      'sha256': digest(filename, function=sha256)
     })
 
     key = SubElement(blob, 'Key')
