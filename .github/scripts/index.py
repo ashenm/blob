@@ -10,13 +10,11 @@
 from datetime import datetime, timezone
 from digest import digest
 from hashlib import md5, sha256
-from importlib.util import module_from_spec, spec_from_file_location
 from os import stat
-from os.path import join
 from subprocess import PIPE, CalledProcessError, run
 from xml.etree.ElementTree import Element, SubElement, tostring
 
-EXCLUDES = [ 'index.xml', 'status.xml' ]
+EXCLUDES = [ 'index.html', 'index.xml', 'index.xsl', 'status.xml' ]
 
 def stats(filename):
 
@@ -58,12 +56,25 @@ def index(collections):
 
 if __name__ == '__main__':
 
+  from bs4 import BeautifulSoup
   from glob import iglob
+  from lxml import etree
+  from rmodule import rmodule
   from xml.dom.minidom import parseString
 
+  reindent = rmodule('https://raw.githubusercontent.com/ashenm/xmlresume/master/scripts/reindent.py').reindent
   refs = map(stats, filter(lambda f: f not in EXCLUDES, iglob('*???.???*')))
 
   with open('index.xml', mode='wb') as stream:
     stream.write(parseString(index(refs)).toprettyxml(indent='  ', newl='\r\n', encoding='UTF-8'))
+
+  xsl = etree.XSLT(etree.parse(source='index.xsl'))
+  document = str(xsl(etree.parse(source='index.xml')))
+
+  soup = BeautifulSoup(markup=document, features='lxml')
+  document = soup.prettify(encoding=None, formatter='html')
+
+  with open('index.html', 'wt') as stream:
+    stream.write(reindent(document))
 
 # vim: set expandtab shiftwidth=2 syntax=python:
