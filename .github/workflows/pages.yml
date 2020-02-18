@@ -55,11 +55,11 @@ jobs:
       - uses: actions/download-artifact@v1
         with:
           name: index.xml
-          path: /home/runner/work/blob/blob
+          path: ${{ env.GITHUB_WORKSPACE }}
       - uses: actions/download-artifact@v1
         with:
           name: index.html
-          path: /home/runner/work/blob/blob
+          path: ${{ env.GITHUB_WORKSPACE }}
       - uses: actions/download-artifact@v1
         with:
           name: digests.txz
