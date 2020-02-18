@@ -59,13 +59,10 @@
 
           $('table').DataTable({
             autoWidth: false,
-            columnDefs: [ {
-              targets: -1,
-              width: 64
-            }, {
-              targets: -2,
-              width: 32
-            } ],
+            columnDefs: [
+              { targets: -1, width: 64 },
+              { targets: -2, width: 32 }
+            ],
             paging: false,
             responsive: true
           });
