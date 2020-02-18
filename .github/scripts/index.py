@@ -72,6 +72,11 @@ if __name__ == '__main__':
   document = str(xsl(etree.parse(source='index.xml')))
 
   soup = BeautifulSoup(markup=document, features='lxml')
+
+  soup.head.append(soup.new_tag('meta', attrs={ 'build-timestamp': datetime.utcnow().ctime() }))
+  soup.head.append(soup.new_tag('meta', attrs={ 'build-commit':
+    run([ 'git', 'rev-parse', 'HEAD' ], stdout=PIPE).stdout.decode().strip() }))
+
   document = soup.prettify(encoding=None, formatter='html')
 
   with open('index.html', 'wt') as stream:
