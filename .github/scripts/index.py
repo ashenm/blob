@@ -39,18 +39,19 @@ def index(collections):
 
     filename, stats = collection
 
-    blob = SubElement(blobs, 'Blob', {
-      'md5': digest(filename, function=md5),
-      'sha256': digest(filename, function=sha256)
-    })
+    blob = SubElement(blobs, 'Blob')
 
     key = SubElement(blob, 'Key')
     lastmod = SubElement(blob, 'LastModified')
     size = SubElement(blob, 'Size')
+    hmd5 = SubElement(blob, 'Md5')
+    hsha256 = SubElement(blob, 'Sha256')
 
     key.text = filename
     lastmod.text = datetime.fromtimestamp(stats['st_mtime'], tz=timezone.utc).isoformat()
     size.text = str(stats['st_size'])
+    hmd5.text = digest(filename, function=md5)
+    hsha256.text = digest(filename, function=sha256)
 
   return tostring(blobs, 'utf-8')
 
