@@ -131,8 +131,20 @@
     <td class="key"><xsl:value-of select="Key" /></td>
     <td class="size"><xsl:value-of select="Size" /></td>
     <td class="mtime"><xsl:value-of select="LastModified" /></td>
-    <td class="etag"><xsl:value-of select="Md5" /></td>
-    <td class="etag"><xsl:value-of select="Sha256" /></td>
+
+    <td class="etag">
+      <xsl:attribute name="data-href">
+        <xsl:value-of select="concat('//raw.githubusercontent.com/ashenm/blob/gh-pages/', Key, '.md5')" />
+      </xsl:attribute>
+      <xsl:value-of select="Md5" />
+    </td>
+
+    <td class="etag">
+      <xsl:attribute name="data-href">
+        <xsl:value-of select="concat('//raw.githubusercontent.com/ashenm/blob/gh-pages/', Key, '.sha256')" />
+      </xsl:attribute>
+      <xsl:value-of select="Sha256" />
+    </td>
   </xsl:template>
 
 </xsl:stylesheet>
