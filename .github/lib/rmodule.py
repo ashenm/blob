@@ -7,14 +7,15 @@
 #
 
 from http.client import HTTPException
-from imp import new_module
+from importlib.util import spec_from_loader
 from os.path import basename
 from urllib.error import URLError
 from urllib.request import urlopen
 
 def rmodule(url):
 
-  module = new_module(basename(url).lower().rstrip('.py'))
+  module = spec_from_loader(
+      basename(url).lower().rstrip('.py'), loader=None, origin=url)
 
   try:
     response = urlopen(url).read()
