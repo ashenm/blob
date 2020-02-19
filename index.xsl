@@ -64,7 +64,9 @@
               { targets: -2, width: 32 }
             ],
             paging: false,
-            responsive: true
+            responsive: {
+              details: { renderer: renderer }
+            }
           });
 
           $('tbody .size').attr('data-size', function () {
@@ -80,6 +82,29 @@
           }).addClass('readable').click(toggle);
 
         });
+
+        var renderer = function customDataRenderer (api, index, columns) {
+
+          var data = $.map(columns, function (column) {
+
+            if (!column.hidden) {
+              return undefined;
+            }
+
+            return $('<tr />', {
+              'html': [
+                $('<td />', { class: 'dtr-title', text: column.title }),
+                $('<td />', { class: api.cell(index, column.columnIndex).node().className.concat(' ', 'dtr-data'), html: column.data, style: 'overflow: auto;' })
+              ],
+              'data-dt-column': column.columnIndex,
+              'data-dt-row': column.rowIndex
+            });
+
+          });
+
+          return data.length ? $('<table />', { class: 'dtr-details', html: data, style: 'table-layout: fixed;' }) : false;
+
+        };
 
         var toggle = function toggleRawReadable () {
 
