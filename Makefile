@@ -13,8 +13,8 @@ index: ## build index listing
 
 .PHONY: checksums
 checksums: ## compute file checksums
-	find $${GITHUB_WORKSPACE:-.} -maxdepth 1 -type f -name '*???.???*' \! \
-	  -name 'status.xml' -exec ./.github/scripts/digest.py {} \;
+	find $${GITHUB_WORKSPACE:-.} -maxdepth 1 -type f -name '*???.???*' \
+	  $$(printf " ! -name %s" $$(cat excludes.patterns)) -exec ./.github/scripts/digest.py {} \;
 
 .PHONY: clean
 clean: ## delete build artifacts

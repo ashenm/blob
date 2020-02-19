@@ -14,8 +14,6 @@ from os import stat
 from subprocess import PIPE, CalledProcessError, run
 from xml.etree.ElementTree import Element, SubElement, tostring
 
-EXCLUDES = [ 'index.html', 'index.xml', 'index.xsl', 'status.xml' ]
-
 def stats(filename):
 
   _ = stat(filename)
@@ -62,8 +60,11 @@ if __name__ == '__main__':
   from rmodule import rmodule
   from xml.dom.minidom import parseString
 
+  with open('excludes.patterns') as stream:
+    excludes = list(map(str.strip, stream.readlines()))
+
   reindent = rmodule('https://raw.githubusercontent.com/ashenm/xmlresume/master/scripts/reindent.py').reindent
-  refs = map(stats, filter(lambda f: f not in EXCLUDES, iglob('*???.???*')))
+  refs = map(stats, filter(lambda f: f not in excludes, iglob('*???.???*')))
 
   with open('index.xml', mode='wb') as stream:
     stream.write(parseString(index(refs)).toprettyxml(indent='  ', newl='\r\n', encoding='UTF-8'))

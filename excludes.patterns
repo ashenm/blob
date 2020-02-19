@@ -1,0 +1,10 @@
+.git
+.github
+.gitattributes
+excludes.patterns
+index.html
+index.xml
+index.xsl
+status.xml
+README.md
+Makefile
