@@ -19,10 +19,8 @@ jobs:
           python-version: 3.7
       - run: |
           python -m pip install --upgrade pip
-          pip install lxml bs4
-      - run: ./.github/scripts/index.py
-        env:
-          PYTHONPATH: '.github/lib'
+          make install
+      - run: make index
       - uses: actions/upload-artifact@v1
         with:
           name: index.xml
@@ -38,7 +36,7 @@ jobs:
     name: Digest Files
     steps:
       - uses: actions/checkout@v2
-      - run: find ${GITHUB_WORKSPACE:-.} -maxdepth 1 -type f -name '*???.???*' \! -name 'status.xml' -exec ./.github/scripts/digest.py {} \;
+      - run: make checksums
       - run: tar --xz --create --file digests.txz *.md5 *.sha256
       - uses: actions/upload-artifact@v1
         with:
