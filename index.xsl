@@ -39,10 +39,6 @@
           text-align: right;
         }
 
-        table .sha256 {
-          display: none;
-        }
-
         tbody .etag {
           font-family: monospace;
         }
