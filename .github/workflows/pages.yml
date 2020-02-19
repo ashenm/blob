@@ -65,7 +65,7 @@ jobs:
       - run: |
           tar --xz --extract --file /tmp/digests.txz
           mkdir --parent /tmp/build
-          rsync --delete --links --recursive --exclude .git --exclude .github ${GITHUB_WORKSPACE:-.}/ /tmp/build
+          rsync --delete --links --recursive --exclude .git --exclude .github --exclude .gitattributes ${GITHUB_WORKSPACE:-.}/ /tmp/build
       - run: |
           git init
           git checkout --orphan gh-pages
