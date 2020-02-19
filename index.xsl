@@ -89,8 +89,8 @@
 
             return $('<tr />', {
               'html': [
-                $('<td />', { class: 'dtr-title', text: column.title }),
-                $('<td />', { class: api.cell(index, column.columnIndex).node().className.concat(' ', 'dtr-data'), html: column.data, style: 'overflow: auto;' })
+                $('<td />', { class: 'dtr-title', text: column.title, style: 'padding: 0 8px 0 0;' }),
+                $('<td />', { class: api.cell(index, column.columnIndex).node().className.concat(' ', 'dtr-data'), html: column.data, style: 'overflow: auto; padding: 0;' })
               ],
               'data-dt-column': column.columnIndex,
               'data-dt-row': column.rowIndex
