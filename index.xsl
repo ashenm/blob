@@ -43,6 +43,14 @@
           font-family: monospace;
         }
 
+        tbody .view {
+          color: #5A5A5A;
+          font-size: small;
+          float: right;
+          padding: 0 0 0 1ch;
+          text-decoration: none;
+        }
+
       ]]></style>
 
       <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
@@ -150,11 +158,72 @@
   </xsl:template>
 
   <xsl:template match="/Blobs/Blob">
-    <td class="key"><xsl:value-of select="Key" /></td>
+
+    <td class="key">
+      <xsl:apply-templates select="Key" />
+    </td>
+
     <td class="size"><xsl:value-of select="Size" /></td>
     <td class="mtime"><xsl:value-of select="LastModified" /></td>
     <td class="etag"><xsl:value-of select="@md5" /></td>
     <td class="etag"><xsl:value-of select="@sha256" /></td>
+
+  </xsl:template>
+
+  <xsl:template match="/Blobs/Blob/Key">
+
+    <xsl:attribute name="data-search">
+      <xsl:value-of select="." />
+    </xsl:attribute>
+
+    <xsl:value-of select="." />
+
+    <xsl:if test="ends-with(., '.csv')">
+      <xsl:call-template name="raw">
+        <xsl:with-param name="key" select="." />
+      </xsl:call-template>
+    </xsl:if>
+
+    <xsl:if test="ends-with(., '.txt')">
+      <xsl:call-template name="raw">
+        <xsl:with-param name="key" select="." />
+      </xsl:call-template>
+    </xsl:if>
+
+    <xsl:if test="ends-with(., '.jpg')">
+      <xsl:call-template name="raw">
+        <xsl:with-param name="key" select="." />
+      </xsl:call-template>
+    </xsl:if>
+
+    <xsl:if test="ends-with(., '.svg')">
+      <xsl:call-template name="view">
+        <xsl:with-param name="key" select="." />
+        <xsl:with-param name="type" select="'svg'" />
+      </xsl:call-template>
+    </xsl:if>
+
+  </xsl:template>
+
+  <xsl:template name="view">
+    <xsl:param name="key" />
+    <xsl:param name="type" />
+    <a class="view">
+      <xsl:attribute name="href">
+        <xsl:value-of select="concat('https://render.githubusercontent.com/view/', $type, '?url=https://raw.githubusercontent.com/ashenm/blob/master/', $key)" />
+      </xsl:attribute>
+      <span>view</span>
+    </a>
+  </xsl:template>
+
+  <xsl:template name="raw">
+    <xsl:param name="key" />
+    <a class="view">
+      <xsl:attribute name="href">
+        <xsl:value-of select="concat('https://raw.githubusercontent.com/ashenm/blob/master/', $key)" />
+      </xsl:attribute>
+      <span>view</span>
+    </a>
   </xsl:template>
 
 </xsl:stylesheet>

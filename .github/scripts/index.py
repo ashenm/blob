@@ -54,33 +54,15 @@ def index(collections):
 
 if __name__ == '__main__':
 
-  from bs4 import BeautifulSoup
   from glob import iglob
-  from lxml import etree
-  from rmodule import rmodule
   from xml.dom.minidom import parseString
 
   with open('excludes.patterns') as stream:
     excludes = list(map(str.strip, stream.readlines()))
 
-  reindent = rmodule('https://raw.githubusercontent.com/ashenm/xmlresume/master/scripts/reindent.py').reindent
   refs = map(stats, filter(lambda f: f not in excludes, iglob('*???.???*')))
 
   with open('index.xml', mode='wb') as stream:
     stream.write(parseString(index(refs)).toprettyxml(indent='  ', newl='\r\n', encoding='UTF-8'))
-
-  xsl = etree.XSLT(etree.parse(source='index.xsl'))
-  document = str(xsl(etree.parse(source='index.xml')))
-
-  soup = BeautifulSoup(markup=document, features='lxml')
-
-  soup.head.append(soup.new_tag('meta', attrs={ 'build-timestamp': datetime.utcnow().ctime() }))
-  soup.head.append(soup.new_tag('meta', attrs={ 'build-commit':
-    run([ 'git', 'rev-parse', 'HEAD' ], stdout=PIPE).stdout.decode().strip() }))
-
-  document = soup.prettify(encoding=None, formatter='html')
-
-  with open('index.html', 'wt') as stream:
-    stream.write(reindent(document))
 
 # vim: set expandtab shiftwidth=2 syntax=python:

@@ -5,11 +5,14 @@ help: ## show make targets
 
 .PHONY: install
 install: ## install build requisits
-	pip3 install bs4 lxml
+	curl --fail --location --output /tmp/saxon.zip 'https://downloads.sourceforge.net/project/saxon/Saxon-HE/9.9/SaxonHE9-9-1-6J.zip'
+	unzip -d /tmp/saxon /tmp/saxon.zip
 
 .PHONY: index
 index: ## build index listing
-	PYTHONPATH="$$PYTHONPATH$${PYTHONPATH:+:}.github/lib" ./.github/scripts/index.py
+	python3 .github/scripts/index.py
+	CLASSPATH="$${CLASSPATH}$${CLASSPATH:+:}/tmp/saxon/saxon9he.jar" \
+	  java net.sf.saxon.Transform -s:index.xml -xsl:index.xsl -o:index.html
 
 .PHONY: checksums
 checksums: ## compute file checksums
