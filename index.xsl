@@ -61,7 +61,7 @@
 
         $(function () {
 
-          $('table').DataTable({
+          $('table').addClass('stripe').DataTable({
             autoWidth: false,
             columnDefs: [
               { targets: 1, width: '9ch' },    // size
