@@ -64,6 +64,7 @@
           $('table').DataTable({
             autoWidth: false,
             columnDefs: [
+              { targets: 1, width: '9ch' },    // size
               { targets: 2, width: '25ch' },   // last modified
               { targets: 3, width: '64px' },   // md5 checksum
               { targets: 4, width: '32px' }    // sha256 checksum
