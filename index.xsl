@@ -43,7 +43,7 @@
           font-family: monospace;
         }
 
-        tbody .view {
+        tbody .view a {
           color: #5A5A5A;
           font-size: small;
           text-decoration: none;
@@ -62,10 +62,11 @@
           $('table').addClass('stripe').DataTable({
             autoWidth: false,
             columnDefs: [
-              { targets: 2, width: '9ch' },    // size
-              { targets: 3, width: '25ch' },   // last modified
-              { targets: 4, width: '64px' },   // md5 checksum
-              { targets: 5, width: '32px' }    // sha256 checksum
+              { targets: 1, searching: false },    // view
+              { targets: 2, width: '9ch' },        // size
+              { targets: 3, width: '25ch' },       // last modified
+              { targets: 4, width: '64px' },       // md5 checksum
+              { targets: 5, width: '32px' }        // sha256 checksum
             ],
             paging: false,
             responsive: {
@@ -160,8 +161,8 @@
 
     <td class="key"><xsl:value-of select="Key" /></td>
 
-    <td>
-      <xsl:call-template name="actions">
+    <td class="view">
+      <xsl:call-template name="view">
         <xsl:with-param name="key">
           <xsl:value-of select="Key" />
         </xsl:with-param>
@@ -175,13 +176,9 @@
 
   </xsl:template>
 
-  <xsl:template name="actions">
+  <xsl:template name="view">
 
     <xsl:param name="key" />
-
-    <xsl:attribute name="data-search">
-      <xsl:value-of select="$key" />
-    </xsl:attribute>
 
     <xsl:if test="ends-with($key, '.csv')">
       <xsl:call-template name="raw">
@@ -202,7 +199,7 @@
     </xsl:if>
 
     <xsl:if test="ends-with($key, '.svg')">
-      <xsl:call-template name="view">
+      <xsl:call-template name="render">
         <xsl:with-param name="key" select="$key" />
         <xsl:with-param name="type" select="'svg'" />
       </xsl:call-template>
@@ -210,24 +207,24 @@
 
   </xsl:template>
 
-  <xsl:template name="view">
+  <xsl:template name="render">
     <xsl:param name="key" />
     <xsl:param name="type" />
-    <a class="view">
+    <a class="render">
       <xsl:attribute name="href">
         <xsl:value-of select="concat('https://render.githubusercontent.com/view/', $type, '?url=https://raw.githubusercontent.com/ashenm/blob/master/', $key)" />
       </xsl:attribute>
-      <span>view</span>
+      <xsl:value-of select="'view'" />
     </a>
   </xsl:template>
 
   <xsl:template name="raw">
     <xsl:param name="key" />
-    <a class="view">
+    <a class="raw">
       <xsl:attribute name="href">
         <xsl:value-of select="concat('https://raw.githubusercontent.com/ashenm/blob/master/', $key)" />
       </xsl:attribute>
-      <span>view</span>
+      <xsl:value-of select="'view'" />
     </a>
   </xsl:template>
 
