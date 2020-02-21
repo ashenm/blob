@@ -60,6 +60,7 @@ if __name__ == '__main__':
   with open('excludes.patterns') as stream:
     excludes = list(map(str.strip, stream.readlines()))
 
+  excludes.extend(run([ 'git', 'ls-files', '--others' ], stdout=PIPE, check=True).stdout.decode().splitlines())
   refs = map(stats, filter(lambda f: f not in excludes, iglob('*???.???*')))
 
   with open('index.xml', mode='wb') as stream:
