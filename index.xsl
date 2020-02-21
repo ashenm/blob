@@ -212,7 +212,7 @@
     <xsl:param name="type" />
     <a class="render">
       <xsl:attribute name="href">
-        <xsl:value-of select="concat('https://render.githubusercontent.com/view/', $type, '?url=https://raw.githubusercontent.com/ashenm/blob/master/', $key)" />
+        <xsl:value-of select="concat('//render.githubusercontent.com/view/', $type, '?url=https://raw.githubusercontent.com/ashenm/blob/master/', $key)" />
       </xsl:attribute>
       <xsl:value-of select="'view'" />
     </a>
@@ -222,7 +222,7 @@
     <xsl:param name="key" />
     <a class="raw">
       <xsl:attribute name="href">
-        <xsl:value-of select="concat('https://raw.githubusercontent.com/ashenm/blob/master/', $key)" />
+        <xsl:value-of select="concat('//raw.githubusercontent.com/ashenm/blob/master/', $key)" />
       </xsl:attribute>
       <xsl:value-of select="'view'" />
     </a>
