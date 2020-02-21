@@ -21,29 +21,29 @@
           width: 100%;
         }
 
-        table .raw {
-          cursor: zoom-out;
-        }
-
-        table .readable {
-          cursor: zoom-in;
-        }
-
         thead {
           text-align: center;
         }
 
-        tbody .etag,
-        tbody .mtime,
-        tbody .size {
+        tbody td.raw {
+          cursor: zoom-out;
+        }
+
+        tbody td.readable {
+          cursor: zoom-in;
+        }
+
+        tbody td.etag,
+        tbody td.mtime,
+        tbody td.size {
           text-align: right;
         }
 
-        tbody .etag {
+        tbody td.etag {
           font-family: monospace;
         }
 
-        tbody .view a {
+        tbody td.view a {
           color: #5A5A5A;
           font-size: small;
           text-decoration: none;
