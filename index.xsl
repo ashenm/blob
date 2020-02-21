@@ -59,6 +59,18 @@
 
         $(function () {
 
+          $('tbody .size').attr('data-size', function () {
+            return $(this).data('_', this.innerText).text();
+          }).text(function (index, text) {
+            return filesize(text);
+          }).addClass('readable').click(toggle);
+
+          $('tbody .mtime').attr('data-mtime', function () {
+            return $(this).data('_', this.innerText).text();
+          }).text(function (index, text) {
+            return moment.utc(text).fromNow();
+          }).addClass('readable').click(toggle);
+
           $('table').addClass('stripe').DataTable({
             autoWidth: false,
             columnDefs: [
@@ -73,18 +85,6 @@
               details: { renderer: renderer }
             }
           });
-
-          $('tbody .size').attr('data-size', function () {
-            return $(this).data('_', this.innerText).text();
-          }).text(function (index, text) {
-            return filesize(text);
-          }).addClass('readable').click(toggle);
-
-          $('tbody .mtime').attr('data-mtime', function () {
-            return $(this).data('_', this.innerText).text();
-          }).text(function (index, text) {
-            return moment.utc(text).fromNow();
-          }).addClass('readable').click(toggle);
 
         });
 
