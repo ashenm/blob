@@ -198,6 +198,13 @@
       </xsl:call-template>
     </xsl:if>
 
+    <xsl:if test="ends-with($key, '.pdf')">
+      <xsl:call-template name="render">
+        <xsl:with-param name="key" select="$key" />
+        <xsl:with-param name="type" select="'pdf'" />
+      </xsl:call-template>
+    </xsl:if>
+
     <xsl:if test="ends-with($key, '.svg')">
       <xsl:call-template name="render">
         <xsl:with-param name="key" select="$key" />
