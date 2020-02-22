@@ -205,6 +205,13 @@
       </xsl:call-template>
     </xsl:if>
 
+    <xsl:if test="ends-with($key, '.psd')">
+      <xsl:call-template name="render">
+        <xsl:with-param name="key" select="$key" />
+        <xsl:with-param name="type" select="'psd'" />
+      </xsl:call-template>
+    </xsl:if>
+
     <xsl:if test="ends-with($key, '.svg')">
       <xsl:call-template name="render">
         <xsl:with-param name="key" select="$key" />
