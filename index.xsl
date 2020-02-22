@@ -219,6 +219,12 @@
       </xsl:call-template>
     </xsl:if>
 
+    <xsl:if test="ends-with($key, '.rtf')">
+      <xsl:call-template name="gview">
+        <xsl:with-param name="key" select="$key" />
+      </xsl:call-template>
+    </xsl:if>
+
   </xsl:template>
 
   <xsl:template name="gview">
