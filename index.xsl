@@ -221,6 +221,16 @@
 
   </xsl:template>
 
+  <xsl:template name="gview">
+    <xsl:param name="key" />
+    <a class="gview">
+      <xsl:attribute name="href">
+        <xsl:value-of select="concat('//docs.google.com/viewer?embedded=true&amp;url=https://raw.githubusercontent.com/ashenm/blob/master/', $key)" />
+      </xsl:attribute>
+      <xsl:value-of select="'view'" />
+    </a>
+  </xsl:template>
+
   <xsl:template name="render">
     <xsl:param name="key" />
     <xsl:param name="type" />
