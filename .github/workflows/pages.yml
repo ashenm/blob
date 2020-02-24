@@ -1,9 +1,8 @@
 name: GitHub Pages
 
 on:
-  push:
-    branches:
-      - master
+  - push
+  - pull_request
 
 jobs:
 
@@ -49,6 +48,7 @@ jobs:
   push:
     name: Publish Pages
     needs: [ digest, index ]
+    if: github.event_name == 'push' && github.ref == 'master'
     steps:
       - uses: actions/checkout@v2
       - uses: actions/download-artifact@v1
