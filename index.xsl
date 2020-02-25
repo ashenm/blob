@@ -181,7 +181,7 @@
     <xsl:param name="key" />
 
     <xsl:if test="ends-with($key, '.csv')">
-      <xsl:call-template name="raw">
+      <xsl:call-template name="datapipes">
         <xsl:with-param name="key" select="$key" />
       </xsl:call-template>
     </xsl:if>
@@ -243,6 +243,16 @@
     <a class="render">
       <xsl:attribute name="href">
         <xsl:value-of select="concat('//render.githubusercontent.com/view/', $type, '?url=https://raw.githubusercontent.com/ashenm/blob/master/', $key)" />
+      </xsl:attribute>
+      <xsl:value-of select="'view'" />
+    </a>
+  </xsl:template>
+
+  <xsl:template name="datapipes">
+    <xsl:param name="key" />
+    <a class="datapipes">
+      <xsl:attribute name="href">
+        <xsl:value-of select="concat('//datapipes.okfnlabs.org/csv/html/?url=https://raw.githubusercontent.com/ashenm/blob/master/', $key)" />
       </xsl:attribute>
       <xsl:value-of select="'view'" />
     </a>
