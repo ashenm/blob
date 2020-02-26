@@ -193,7 +193,7 @@
     </xsl:if>
 
     <xsl:if test="ends-with($key, '.jpg')">
-      <xsl:call-template name="raw">
+      <xsl:call-template name="basic">
         <xsl:with-param name="key" select="$key" />
       </xsl:call-template>
     </xsl:if>
