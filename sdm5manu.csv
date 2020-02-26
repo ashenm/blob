@@ -1,4 +1,4 @@
-Property number,Price,Income,Distance,Viewing cost,Times viewed,Advertising cost,Profit
+Property Number,Price,Income,Distance,Viewing Cost,Times Viewed,Advertising Cost,Profit
 1013,26300,,0,,1,35,
 1014,28900,,27,,1,35,
 1015,13600,,2,,1,20,
@@ -37,4 +37,4 @@ Property number,Price,Income,Distance,Viewing cost,Times viewed,Advertising cost
 1055,22000,,,,0,35,
 1056,14000,,,,1,20,
 ,,,,,,,
-,,,,,Total profit,,
+,,,,,Total Profit,,
