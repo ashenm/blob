@@ -192,12 +192,6 @@
       </xsl:call-template>
     </xsl:if>
 
-    <xsl:if test="ends-with($key, '.txt')">
-      <xsl:call-template name="raw">
-        <xsl:with-param name="key" select="$key" />
-      </xsl:call-template>
-    </xsl:if>
-
     <xsl:if test="ends-with($key, '.jpg')">
       <xsl:call-template name="raw">
         <xsl:with-param name="key" select="$key" />
@@ -218,6 +212,12 @@
       </xsl:call-template>
     </xsl:if>
 
+    <xsl:if test="ends-with($key, '.rtf')">
+      <xsl:call-template name="gview">
+        <xsl:with-param name="key" select="$key" />
+      </xsl:call-template>
+    </xsl:if>
+
     <xsl:if test="ends-with($key, '.svg')">
       <xsl:call-template name="render">
         <xsl:with-param name="key" select="$key" />
@@ -225,8 +225,8 @@
       </xsl:call-template>
     </xsl:if>
 
-    <xsl:if test="ends-with($key, '.rtf')">
-      <xsl:call-template name="gview">
+    <xsl:if test="ends-with($key, '.txt')">
+      <xsl:call-template name="raw">
         <xsl:with-param name="key" select="$key" />
       </xsl:call-template>
     </xsl:if>
