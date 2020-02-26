@@ -186,6 +186,12 @@
       </xsl:call-template>
     </xsl:if>
 
+    <xsl:if test="ends-with($key, '.htm')">
+      <xsl:call-template name="basic">
+        <xsl:with-param name="key" select="$key" />
+      </xsl:call-template>
+    </xsl:if>
+
     <xsl:if test="ends-with($key, '.txt')">
       <xsl:call-template name="raw">
         <xsl:with-param name="key" select="$key" />
@@ -225,6 +231,16 @@
       </xsl:call-template>
     </xsl:if>
 
+  </xsl:template>
+
+  <xsl:template name="basic">
+    <xsl:param name="key" />
+    <a>
+      <xsl:attribute name="href">
+        <xsl:value-of select="concat('/', $key)" />
+      </xsl:attribute>
+      <xsl:value-of select="'view'" />
+    </a>
   </xsl:template>
 
   <xsl:template name="gview">
