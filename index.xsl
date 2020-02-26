@@ -74,11 +74,11 @@
           $('table').addClass('stripe').DataTable({
             autoWidth: false,
             columnDefs: [
-              { targets: 1, searchable: false },    // view
-              { targets: 2, width: '9ch' },         // size
-              { targets: 3, width: '25ch' },        // last modified
-              { targets: 4, width: '64px' },        // md5 checksum
-              { targets: 5, width: '32px' }         // sha256 checksum
+              { targets: 1, orderable: false, searchable: false },    // view
+              { targets: 2, width: '9ch' },                           // size
+              { targets: 3, width: '25ch' },                          // last modified
+              { targets: 4, width: '64px' },                          // md5 checksum
+              { targets: 5, width: '32px' }                           // sha256 checksum
             ],
             paging: false,
             responsive: {
@@ -140,7 +140,8 @@
     <table>
       <thead>
         <tr>
-          <td class="key" colspan="2">Filename</td>
+          <td class="key">Filename</td>
+          <td class="view"></td>
           <td class="size">Size</td>
           <td class="mtime">Last Modification</td>
           <td class="etag">MD5 Checksum</td>
