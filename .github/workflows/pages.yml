@@ -75,11 +75,9 @@ jobs:
           echo "blob.ashenm.ml" | tee CNAME
           git add --all .
           git commit --quiet --message "Deploy blob.ashenm.ml to github.com/ashenm/blob.git:gh-pages"
-          git push --force --quiet "https://${GITHUB_TOKEN:?Invalid Token}@github.com/ashenm/blob.git" "gh-pages:gh-pages"
+          git push --force --quiet "https://${{ secrets.ENDPOINT_TOKEN }}@github.com/ashenm/blob.git" "gh-pages:gh-pages"
           git show --stat-count=10 HEAD
         working-directory: /tmp/build
-    env:
-      GITHUB_TOKEN: ${{ secrets.ENDPOINT_TOKEN }}
     runs-on: ubuntu-latest
 
 # vim: set expandtab shiftwidth=2 syntax=yaml:
