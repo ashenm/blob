@@ -254,7 +254,9 @@
     <xsl:param name="key" />
     <a class="drawio">
       <xsl:attribute name="href">
-        <xsl:value-of select="concat('//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1#U', encode-for-uri(concat('https://raw.githubusercontent.com/ashenm/blob/master/', $key)))" />
+        <xsl:value-of select="concat('//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=',
+          encode-for-uri(upper-case(substring-before($key, '.drawio'))), '.drawio#U',
+          encode-for-uri(concat('https://raw.githubusercontent.com/ashenm/blob/master/', $key)))" />
       </xsl:attribute>
       <xsl:value-of select="'view'" />
     </a>
