@@ -187,6 +187,12 @@
       </xsl:call-template>
     </xsl:if>
 
+    <xsl:if test="ends-with($key, '.drawio')">
+      <xsl:call-template name="drawio">
+        <xsl:with-param name="key" select="$key" />
+      </xsl:call-template>
+    </xsl:if>
+
     <xsl:if test="ends-with($key, '.htm')">
       <xsl:call-template name="basic">
         <xsl:with-param name="key" select="$key" />
@@ -239,6 +245,16 @@
     <a>
       <xsl:attribute name="href">
         <xsl:value-of select="concat('/', $key)" />
+      </xsl:attribute>
+      <xsl:value-of select="'view'" />
+    </a>
+  </xsl:template>
+
+  <xsl:template name="drawio">
+    <xsl:param name="key" />
+    <a class="drawio">
+      <xsl:attribute name="href">
+        <xsl:value-of select="concat('//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1#U', encode-for-uri(concat('https://raw.githubusercontent.com/ashenm/blob/master/', $key)))" />
       </xsl:attribute>
       <xsl:value-of select="'view'" />
     </a>
