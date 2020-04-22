@@ -26,6 +26,10 @@
           text-align: center;
         }
 
+        tbody td.key {
+          font-family: monospace;
+        }
+
         tbody td.raw {
           cursor: zoom-out;
         }
