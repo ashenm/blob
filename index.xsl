@@ -210,7 +210,7 @@
       </xsl:call-template>
     </xsl:if>
 
-    <xsl:if test="ends-with($key, '.htm')">
+    <xsl:if test="ends-with($key, '.htm') or ends-with($key, '.html')">
       <xsl:call-template name="basic">
         <xsl:with-param name="key" select="$key" />
       </xsl:call-template>
