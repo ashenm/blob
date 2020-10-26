@@ -42,13 +42,15 @@
         tbody td.mtime,
         tbody td.size {
           text-align: right;
+          white-space: pre;
         }
 
         tbody td.etag {
           font-family: monospace;
         }
 
-        tbody td.view a {
+        tbody td.view a,
+        tbody td.download a {
           color: #5A5A5A;
           font-size: small;
           text-decoration: none;
@@ -80,10 +82,11 @@
             autoWidth: false,
             columnDefs: [
               { targets: 1, orderable: false, searchable: false },    // view
-              { targets: 2, width: '9ch' },                           // size
-              { targets: 3, width: '25ch' },                          // last modified
-              { targets: 4, width: '64px' },                          // md5 checksum
-              { targets: 5, width: '32px' }                           // sha256 checksum
+              { targets: 2, orderable: false, searchable: false },    // download
+              { targets: 3, width: '9ch' },                           // size
+              { targets: 4, width: '25ch' },                          // last modified
+              { targets: 5, width: '64px' },                          // md5 checksum
+              { targets: 6, width: '32px' }                           // sha256 checksum
             ],
             paging: false,
             responsive: {
@@ -147,6 +150,7 @@
         <tr>
           <td class="key">Filename</td>
           <td class="view"></td>
+          <td class="download"></td>
           <td class="size">Size</td>
           <td class="mtime">Last Modification</td>
           <td class="etag">MD5 Checksum</td>
@@ -169,6 +173,14 @@
 
     <td class="view">
       <xsl:call-template name="view">
+        <xsl:with-param name="key">
+          <xsl:value-of select="Key" />
+        </xsl:with-param>
+      </xsl:call-template>
+    </td>
+
+    <td class="download">
+      <xsl:call-template name="download">
         <xsl:with-param name="key">
           <xsl:value-of select="Key" />
         </xsl:with-param>
@@ -305,6 +317,16 @@
         <xsl:value-of select="concat('//raw.githubusercontent.com/ashenm/blob/master/', $key)" />
       </xsl:attribute>
       <xsl:value-of select="'view'" />
+    </a>
+  </xsl:template>
+
+  <xsl:template name="download">
+    <xsl:param name="key" />
+    <a class="download">
+      <xsl:attribute name="href">
+        <xsl:value-of select="concat('//ashenm.herokuapp.com/seize?url=', 'https://raw.githubusercontent.com/ashenm/blob/master/', $key)" />
+      </xsl:attribute>
+      <xsl:value-of select="'download'" />
     </a>
   </xsl:template>
 
