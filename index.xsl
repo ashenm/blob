@@ -283,7 +283,7 @@
     <xsl:param name="key" />
     <a class="gview">
       <xsl:attribute name="href">
-        <xsl:value-of select="concat('//docs.google.com/viewer?embedded=true&amp;url=https://raw.githubusercontent.com/ashenm/blob/master/', $key)" />
+        <xsl:value-of select="concat('//docs.google.com/viewer?url=https://raw.githubusercontent.com/ashenm/blob/master/', $key)" />
       </xsl:attribute>
       <xsl:value-of select="'view'" />
     </a>
