@@ -1,0 +1,39 @@
+The Manta Conservation Project ,,,,
+
+Income analysis,,,,
+Income type,ICode,Total income,,
+Donations,D,,,
+Research grants,R,,,
+Education pack sales,E,,,
+
+Regional analysis,,,,
+Region,RCode,Exchange,Currency,Regional income
+Africa,AF,0.242161,Rand,
+Asia,AS,0.316956,Yuan,
+Australasia,AU,2.1,Dollar,
+Europe,EU,2.48615,Euro,
+North America,NA,2.0156,Dollar,
+South America,SA,1,Real,
+
+Date,ICode,Rcode,Amount,Income (Real)
+20/01/2014,D,AF,15,
+20/01/2014,D,AS,150,
+20/01/2014,R,NA,2000,
+20/01/2014,D,EU,25,
+21/01/2014,E,NA,120.5,
+21/01/2014,D,SA,50,
+21/01/2014,E,AF,50,
+21/01/2014,E,AS,25,
+21/01/2014,E,EU,15,
+22/01/2014,E,AU,140,
+22/01/2014,D,EU,1000,
+22/01/2014,D,NA,20,
+23/01/2014,R,SA,25.75,
+23/01/2014,E,EU,16,
+23/01/2014,D,NA,100
+23/01/2014,D,AS,55
+24/01/2014,E,AS,12.5
+25/01/2014,D,AS,10
+25/01/2014,E,AU,2.5
+26/01/2014,D,EU,20
+26/01/2014,R,AS,3500
