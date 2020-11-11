@@ -30,6 +30,7 @@ jobs:
           name: index.html
           path: index.html
     runs-on: ubuntu-latest
+    if: ${{ !startsWith(github.event.head_commit.message, '[Skip CI]') }}
 
   # compute file digests
   digest:
@@ -43,6 +44,7 @@ jobs:
           name: digests.txz
           path: digests.txz
     runs-on: ubuntu-latest
+    if: ${{ !startsWith(github.event.head_commit.message, '[Skip CI]') }}
 
   # publish gh-pages
   push:
