@@ -27,3 +27,6 @@ checksums: ## compute file checksums
 .PHONY: clean
 clean: ## delete build artifacts
 	rm --force *.md5 *.sha256 index.xml index.html
+
+serve: build
+	python3 -m http.server $${PORT:=8080}
