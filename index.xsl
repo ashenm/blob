@@ -216,7 +216,7 @@
       </xsl:call-template>
     </xsl:if>
 
-    <xsl:if test="ends-with($key, '.jpg')">
+    <xsl:if test="ends-with($key, '.jpg') or ends-with($key, '.png')">
       <xsl:call-template name="basic">
         <xsl:with-param name="key" select="$key" />
       </xsl:call-template>
