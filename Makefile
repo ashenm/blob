@@ -1,3 +1,8 @@
+.DEFAULT_GOAL := help
+
+.PHONY: build
+build: checksums index ## build site
+
 .PHONY: help
 .SILENT: help
 help: ## show make targets
