@@ -60,15 +60,15 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v1
+      - uses: actions/download-artifact@v4
         with:
           name: index.xml
           path: /home/runner/work/blob/blob
-      - uses: actions/download-artifact@v1
+      - uses: actions/download-artifact@v4
         with:
           name: index.html
           path: /home/runner/work/blob/blob
-      - uses: actions/download-artifact@v1
+      - uses: actions/download-artifact@v4
         with:
           name: digests.txz
           path: /tmp
