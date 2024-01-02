@@ -14,7 +14,7 @@ jobs:
   index:
     name: Build Index
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - uses: actions/setup-python@v5
@@ -40,7 +40,7 @@ jobs:
   digest:
     name: Digest Files
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - run: make checksums
       - run: tar --xz --create --file digests.txz *.md5 *.sha256
       - uses: actions/upload-artifact@v1
@@ -58,7 +58,7 @@ jobs:
       - index
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: actions/download-artifact@v1
         with:
           name: index.xml
