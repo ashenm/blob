@@ -1,0 +1,63 @@
+The Xtreme Adventure Holiday Company,,,,,
+
+2013,<enter weeek number here>,12,,Date,<enter date here>
+Pay Rates,,,,,
+Rate of Pay,,,,,
+A,8,,,,
+B,8.25,,,,
+C,9.5,,,,
+D,10.25,,,,
+
+Designation Codes,,,,,
+S,Ski Instructor,,,,
+TB,Trainee Snowboard Instructor,,,,
+H,Host /Hostess,,,,
+TS,Trainee Ski Instructor,,,,
+TA,Transport Assistant,,,,
+A,Administration /Office,,,,,,,,,
+B,Snowboard Instructor,,,,,,,,,
+SA,Senior Administrator,,,,,,,,,
+TM,Transport Manager,,,,,,,,,
+
+Employees,,,,,,,,,,
+Name,Designation Code,Pay Code,Payroll Number,Job Description,Contract Hours,Hours Worked,Rate,Basic Pay,Overtime Pay,Total Pay
+Luca Gisi,B,B,AU0001,,25,,,,,
+Livio Stager,S,B,AU0002,,25,,,,,
+Nico Gantert,B,B,AU0003,,12,,,,,
+Fabian Ging,S,B,AU0007,,25,,,,,
+Mattia Polt,S,B,AU0008,,25,,,,,
+Sofia Walp,H,A,AU0009,,20,,,,,
+Laura Haener,S,B,AU0010,,25,,,,,
+Alessandro Messerli,S,B,AU0012,,25,,,,,
+Lara Forrer,B,B,AU0013,,25,,,,,
+Arda Hegler,S,B,AU0014,,25
+Simone Aebi,B,B,AU0015,,25
+Matteo Isch,A,B,AU0016,,12
+Arenwald Wurgler,A,A,AU0017,,38
+Julian Bruster,B,C,AU0018,,30
+Tim Frueh,B,B,AU0021,,25
+Luca Rim,A,B,AU0022,,12
+Giulia Ramseyer,S,C,AU0025,,30
+Leon Joost,S,B,AU0026,,25
+Romina Von Gunten,SA,D,AU0027,,40
+Leandro Laqua,S,B,AU0028,,25
+Andri Jud,TB,A,AU0029,,25
+Matteo Nufer,S,B,AU0033,,25
+Mia Leupp,B,B,AU0034,,25
+Nathan Ganz,S,B,AU0035,,25
+Jon Haby,TS,A,AU0036,,25
+Matteo Hilty,A,B,AU0037,,20
+Noah Truby,TB,A,AU0038,,25
+Leonardo Jud,B,B,AU0039,,12
+Dekke Gisi,A,B,AU0040,,25
+Noah Wurgler,B,B,AU0041,,20
+Alice Thoeny,B,B,AU0042,,25
+Arne Bircher,TA,A,AU0043,,10
+Luca Roser,S,C,AU0045,,30
+Raphael Michlig,TA,A,AU0048,,12
+Nicole Giovanni,B,B,AU0049,,20
+Thomas Tobler,TM,C,AU0051,,25
+Nico Lichty,S,B,AU0052,,25
+Dekke Heitz,TA,A,AU0053,,12
+John Zwinky,B,B,AU0054,,12
+Camille Oberlin,S,B,AU0055,,25

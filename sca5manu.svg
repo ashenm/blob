@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 16 22.624" width="62mm" height="87.668mm">
+
+  <g fill="none" stroke="#8F8F8F" stroke-width="0.125">
+
+    <!-- page border -->
+    <path d="M 0 0 V 22.624 H 16 V 0 Z" stroke-width="0.5" />
+
+    <!-- title placeholder -->
+    <path d="M 1.75 2 V 4 H 14.25 V 2 Z" />
+
+    <!-- image placeholder -->
+    <path d="M 1.75 5 v 4 h 4 v -4 Z" />
+
+    <!-- text placeholder -->
+    <path d="M 6.75 5 H 14.25 V 20.624 H 1.75 V 10 h 5 Z" />
+
+  </g>
+
+</svg>
+<!-- vim: set expandtab shiftwidth=2 syntax=svg: -->
