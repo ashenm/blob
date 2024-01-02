@@ -23,7 +23,7 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           distribution: corretto
-          java-version: 13
+          java-version: 21
       - run: make install
       - run: make index
       - uses: actions/upload-artifact@v1
