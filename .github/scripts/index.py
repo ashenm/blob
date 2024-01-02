@@ -4,7 +4,7 @@
 # Builds directory listing index
 #
 # Ashen Gunaratne
-# mail@ashenm.ml
+# mail@ashenm.dev
 #
 
 from datetime import datetime, timezone
