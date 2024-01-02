@@ -4,7 +4,7 @@
 # Computes checksums for directory files
 #
 # Ashen Gunaratne
-# mail@ashenm.ml
+# mail@ashenm.dev
 #
 
 from hashlib import md5, sha256

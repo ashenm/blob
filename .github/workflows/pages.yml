@@ -78,11 +78,11 @@ jobs:
       - run: |
           git init
           git checkout --orphan gh-pages
-          git config user.email "mail@ashenm.ml"
+          git config user.email "mail@ashenm.dev"
           git config user.name "Ashen Gunaratne"
-          echo "blob.ashenm.ml" | tee CNAME
+          echo "blob.ashenm.dev" | tee CNAME
           git add --all .
-          git commit --quiet --message "Deploy blob.ashenm.ml to github.com/ashenm/blob.git:gh-pages"
+          git commit --quiet --message "Deploy blob.ashenm.dev to github.com/ashenm/blob.git:gh-pages"
           git push --force --quiet "https://${{ secrets.ENDPOINT_TOKEN }}@github.com/ashenm/blob.git" "gh-pages:gh-pages"
           git show --stat-count=10 HEAD
         working-directory: /tmp/build
