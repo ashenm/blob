@@ -9,7 +9,6 @@ on:
       - "**"
 
 jobs:
-
   # build index listing
   index:
     name: Build Index
@@ -19,7 +18,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
-          python-version: 3.7
+          python-version: 3.13
       - uses: actions/setup-java@v5
         with:
           distribution: corretto
@@ -102,5 +101,4 @@ jobs:
           channel: "#github"
           name: "GitHub Workflow"
     runs-on: ubuntu-latest
-
 # vim: set expandtab shiftwidth=2 syntax=yaml:
