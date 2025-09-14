@@ -1,0 +1,771 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta name="robots" content="noindex">
+      <meta name="author" content="Ashen Gunaratne">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>BLOBs</title>
+      <link rel="stylesheet" href="//cdn.datatables.net/v/dt/dt-1.10.20/r-2.2.3/datatables.min.css">
+      <style>
+
+        table {
+          width: 100%;
+        }
+
+        thead {
+          text-align: center;
+        }
+
+        tbody td.key {
+          font-family: monospace;
+        }
+
+        tbody td.raw {
+          cursor: zoom-out;
+        }
+
+        tbody td.readable {
+          cursor: zoom-in;
+        }
+
+        tbody td.etag,
+        tbody td.mtime,
+        tbody td.size {
+          text-align: right;
+          white-space: pre;
+        }
+
+        tbody td.etag {
+          font-family: monospace;
+        }
+
+        tbody td.view a,
+        tbody td.download a {
+          color: #5A5A5A;
+          font-size: small;
+          text-decoration: none;
+        }
+
+      </style><script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script><script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script><script src="//cdnjs.cloudflare.com/ajax/libs/filesize/6.0.1/filesize.min.js" integrity="sha256-amk5mNO8nIVwP//56pwOHznfY7yUY+ZMTig9hZrO4IM=" crossorigin="anonymous"></script><script src="//cdn.datatables.net/v/dt/dt-1.10.20/r-2.2.3/datatables.min.js"></script><script>
+
+        $(function () {
+
+          $('tbody .size').attr('data-size', function () {
+            return $(this).data('_', this.innerText).text();
+          }).text(function (index, text) {
+            return filesize(text);
+          }).addClass('readable').click(toggle);
+
+          $('tbody .mtime').attr('data-mtime', function () {
+            return $(this).data('_', this.innerText).text();
+          }).text(function (index, text) {
+            return moment.utc(text).fromNow();
+          }).addClass('readable').click(toggle);
+
+          $('table').addClass('stripe').DataTable({
+            autoWidth: false,
+            columnDefs: [
+              { targets: 1, orderable: false, searchable: false },    // view
+              { targets: 2, orderable: false, searchable: false },    // download
+              { targets: 3, width: '9ch' },                           // size
+              { targets: 4, width: '25ch' },                          // last modified
+              { targets: 5, width: '64px' },                          // md5 checksum
+              { targets: 6, width: '32px' }                           // sha256 checksum
+            ],
+            paging: false,
+            responsive: {
+              details: { renderer: renderer }
+            }
+          });
+
+        });
+
+        var renderer = function customDataRenderer (api, index, columns) {
+
+          var data = $.map(columns, function (column) {
+
+            if (!column.hidden) {
+              return undefined;
+            }
+
+            return $('<tr />', {
+              'html': [
+                $('<td />', { class: 'dtr-title', text: column.title, style: 'padding: 0 8px 0 0;' }),
+                $('<td />', { class: api.cell(index, column.columnIndex).node().className.concat(' ', 'dtr-data'), html: column.data, style: 'overflow: auto; padding: 0;' })
+              ],
+              'data-dt-column': column.columnIndex,
+              'data-dt-row': column.rowIndex
+            });
+
+          });
+
+          return data.length ? $('<table />', { class: 'dtr-details', html: data, style: 'table-layout: fixed;' }) : false;
+
+        };
+
+        var toggle = function toggleRawReadable () {
+
+          var $this = $(this);
+          var current = $this.text();
+
+          $this.text($this.data('_')).data('_', current)
+            .toggleClass('raw readable');
+
+        };
+
+      </script></head>
+   <body>
+      <header></header>
+      <main>
+         <table>
+            <thead>
+               <tr>
+                  <td class="key">Filename</td>
+                  <td class="view"></td>
+                  <td class="download"></td>
+                  <td class="size">Size</td>
+                  <td class="mtime">Last Modification</td>
+                  <td class="etag">MD5 Checksum</td>
+                  <td class="etag">SHA256 Checksum</td>
+               </tr>
+            </thead>
+            <tbody>
+               <tr>
+                  <td class="key">sad2pseu.drawio</td>
+                  <td class="view"><a class="drawio" href="//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=SAD2PSEU.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fashenm%2Fblob%2Fmaster%2Fsad2pseu.drawio">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sad2pseu.drawio">download</a></td>
+                  <td class="size">1732</td>
+                  <td class="mtime">2020-03-11T08:12:23+00:00</td>
+                  <td class="etag">46ae9b4564375de31b1707a78f1ab152</td>
+                  <td class="etag">235bab2e01084db216276469ecc4931cdd0441aad519824b33450ed01d38640d</td>
+               </tr>
+               <tr>
+                  <td class="key">sad3diag.drawio</td>
+                  <td class="view"><a class="drawio" href="//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=SAD3DIAG.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fashenm%2Fblob%2Fmaster%2Fsad3diag.drawio">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sad3diag.drawio">download</a></td>
+                  <td class="size">2240</td>
+                  <td class="mtime">2020-03-11T05:16:09+00:00</td>
+                  <td class="etag">482609fa74b97761e81ca29fbee02a8c</td>
+                  <td class="etag">d8cf9e588da13429509d4436f8cab6c148edd268dc7bb9404d8fe28a9286dd2c</td>
+               </tr>
+               <tr>
+                  <td class="key">sad2diag~2.drawio</td>
+                  <td class="view"><a class="drawio" href="//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=SAD2DIAG~2.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fashenm%2Fblob%2Fmaster%2Fsad2diag~2.drawio">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sad2diag~2.drawio">download</a></td>
+                  <td class="size">1185</td>
+                  <td class="mtime">2020-11-17T08:28:25+00:00</td>
+                  <td class="etag">e29b99223e94468111309e3034b9b508</td>
+                  <td class="etag">8700253d99023a5b82b6489b4c557875a31b4a6ae5a21a16fe29dff7a12a8921</td>
+               </tr>
+               <tr>
+                  <td class="key">swa23manu~1.png</td>
+                  <td class="view"><a href="/swa23manu~1.png">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/swa23manu~1.png">download</a></td>
+                  <td class="size">34289</td>
+                  <td class="mtime">2020-11-22T08:28:15+00:00</td>
+                  <td class="etag">36ee072cabfb7f0cb010e93a575f3979</td>
+                  <td class="etag">f5d845bd7457051fcbcf1e18c050349d28fc5e3555b0b83bae95e365597407c0</td>
+               </tr>
+               <tr>
+                  <td class="key">swa23manu~5.png</td>
+                  <td class="view"><a href="/swa23manu~5.png">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/swa23manu~5.png">download</a></td>
+                  <td class="size">1470</td>
+                  <td class="mtime">2020-11-22T13:12:30+00:00</td>
+                  <td class="etag">45fd883bce38fc43d179944d78bf3a6e</td>
+                  <td class="etag">89573215d992a744cc98b383bf3755f086dd466918688acfe2606a9eb0b0f3de</td>
+               </tr>
+               <tr>
+                  <td class="key">swa23manu~2.png</td>
+                  <td class="view"><a href="/swa23manu~2.png">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/swa23manu~2.png">download</a></td>
+                  <td class="size">1291</td>
+                  <td class="mtime">2020-11-22T13:12:05+00:00</td>
+                  <td class="etag">d215cb35b0c34de415ba9dbf318adfbd</td>
+                  <td class="etag">199d7870aee7060108f45f87994478564e218f7b497c0e8386aad6b56e5fa0e6</td>
+               </tr>
+               <tr>
+                  <td class="key">csa0safo.drawio</td>
+                  <td class="view"><a class="drawio" href="//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=CSA0SAFO.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fashenm%2Fblob%2Fmaster%2Fcsa0safo.drawio">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/csa0safo.drawio">download</a></td>
+                  <td class="size">1121</td>
+                  <td class="mtime">2020-04-18T07:44:22+00:00</td>
+                  <td class="etag">e505da55e953700a88686f34057a1287</td>
+                  <td class="etag">1a232b58e9badb1a6609607dadceb4a37100f6c7cf56dd699f22955f40b932c4</td>
+               </tr>
+               <tr>
+                  <td class="key">sba3manu.csv</td>
+                  <td class="view"><a class="datapipes" href="//datapipes.okfnlabs.org/csv/html/?url=https://raw.githubusercontent.com/ashenm/blob/master/sba3manu.csv">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sba3manu.csv">download</a></td>
+                  <td class="size">73</td>
+                  <td class="mtime">2020-03-04T10:17:01+00:00</td>
+                  <td class="etag">793fb0936a6e8fe2f64726e2644340cb</td>
+                  <td class="etag">162b5475acff4c5eba94c73b3a383adee915719e6741c88ea49dd809f7c087bc</td>
+               </tr>
+               <tr>
+                  <td class="key">csa1spec.drawio</td>
+                  <td class="view"><a class="drawio" href="//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=CSA1SPEC.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fashenm%2Fblob%2Fmaster%2Fcsa1spec.drawio">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/csa1spec.drawio">download</a></td>
+                  <td class="size">1609</td>
+                  <td class="mtime">2020-04-18T10:58:59+00:00</td>
+                  <td class="etag">183e4de91bb2e22a8c22189bfb0578cb</td>
+                  <td class="etag">fc36fe98fe7ce7a93aa3f53130415bc6f7693b6b1ecda098bf8267717488276f</td>
+               </tr>
+               <tr>
+                  <td class="key">sad1pseu.drawio</td>
+                  <td class="view"><a class="drawio" href="//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=SAD1PSEU.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fashenm%2Fblob%2Fmaster%2Fsad1pseu.drawio">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sad1pseu.drawio">download</a></td>
+                  <td class="size">1308</td>
+                  <td class="mtime">2020-03-11T06:37:27+00:00</td>
+                  <td class="etag">09db4112681401dd0cc81daccc0151d6</td>
+                  <td class="etag">58050257a7f8c2bc91da60aed85a39147b9320418a3e09dbf1338b8ecf29b443</td>
+               </tr>
+               <tr>
+                  <td class="key">sca1manu.txt</td>
+                  <td class="view"><a class="raw" href="//raw.githubusercontent.com/ashenm/blob/master/sca1manu.txt">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sca1manu.txt">download</a></td>
+                  <td class="size">1136</td>
+                  <td class="mtime">2020-01-17T13:56:01+00:00</td>
+                  <td class="etag">e418f99add388243b99f93f23269c0e5</td>
+                  <td class="etag">ecd1f9d168309f8bb25c5e4f49b5f70f59997bfe004ab97bf1659de8c5f6e758</td>
+               </tr>
+               <tr>
+                  <td class="key">sdm3manu.csv</td>
+                  <td class="view"><a class="datapipes" href="//datapipes.okfnlabs.org/csv/html/?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm3manu.csv">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm3manu.csv">download</a></td>
+                  <td class="size">509</td>
+                  <td class="mtime">2020-02-13T06:19:07+00:00</td>
+                  <td class="etag">ccc597cf3d2747018fbc43849f7355f3</td>
+                  <td class="etag">3cef42f806ca523c901bd19d783def4bc61542b749ac1375aa9ed751e3f663d8</td>
+               </tr>
+               <tr>
+                  <td class="key">swa22manu.drawio</td>
+                  <td class="view"><a class="drawio" href="//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=SWA22MANU.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fashenm%2Fblob%2Fmaster%2Fswa22manu.drawio">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/swa22manu.drawio">download</a></td>
+                  <td class="size">2585</td>
+                  <td class="mtime">2020-11-11T10:48:26+00:00</td>
+                  <td class="etag">c419a7025a3db58064b7911cf11e52a0</td>
+                  <td class="etag">9234607ce44e6a262a1370e562c2a501a04c6c1f9f644c9dc570dcd759561762</td>
+               </tr>
+               <tr>
+                  <td class="key">sdm7manu~2.csv</td>
+                  <td class="view"><a class="datapipes" href="//datapipes.okfnlabs.org/csv/html/?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm7manu~2.csv">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm7manu~2.csv">download</a></td>
+                  <td class="size">98</td>
+                  <td class="mtime">2020-11-14T09:23:25+00:00</td>
+                  <td class="etag">ba0a75b4ed9de13205acf034eddb31fa</td>
+                  <td class="etag">8ec71e783289930ce3c5598c514a35160e6ea152a161cda59d1ff1bf3fe39608</td>
+               </tr>
+               <tr>
+                  <td class="key">swa3manu.drawio</td>
+                  <td class="view"><a class="drawio" href="//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=SWA3MANU.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fashenm%2Fblob%2Fmaster%2Fswa3manu.drawio">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/swa3manu.drawio">download</a></td>
+                  <td class="size">1380</td>
+                  <td class="mtime">2020-10-12T06:18:47+00:00</td>
+                  <td class="etag">46c569ef56dab98e5d5f07cb002834ee</td>
+                  <td class="etag">5a488518f0574623e8daa22d93e93f706313425772e1a1f074dfb2d70c1732c4</td>
+               </tr>
+               <tr>
+                  <td class="key">sad2diag~1.drawio</td>
+                  <td class="view"><a class="drawio" href="//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=SAD2DIAG~1.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fashenm%2Fblob%2Fmaster%2Fsad2diag~1.drawio">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sad2diag~1.drawio">download</a></td>
+                  <td class="size">1033</td>
+                  <td class="mtime">2020-11-17T08:27:37+00:00</td>
+                  <td class="etag">5134e778820fb50c19d92aa90d7ae5a1</td>
+                  <td class="etag">03d157c2d3ac37e9113ede9e4f6778f281c1b16cf4bf40328819eede350e9d11</td>
+               </tr>
+               <tr>
+                  <td class="key">sca5manu.svg</td>
+                  <td class="view"><a class="render" href="//render.githubusercontent.com/view/svg?url=https://raw.githubusercontent.com/ashenm/blob/master/sca5manu.svg">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sca5manu.svg">download</a></td>
+                  <td class="size">553</td>
+                  <td class="mtime">2020-02-14T09:39:47+00:00</td>
+                  <td class="etag">26655a1321a987605cceb6551b88255f</td>
+                  <td class="etag">6f7974357ece551abf943b94120dd44a8f8060ba8cde4fe8dfdb8a9d12cac918</td>
+               </tr>
+               <tr>
+                  <td class="key">csa3safo.drawio</td>
+                  <td class="view"><a class="drawio" href="//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=CSA3SAFO.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fashenm%2Fblob%2Fmaster%2Fcsa3safo.drawio">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/csa3safo.drawio">download</a></td>
+                  <td class="size">1141</td>
+                  <td class="mtime">2020-04-18T07:47:23+00:00</td>
+                  <td class="etag">09fcdcb5e0c198eded4210e59b4c380d</td>
+                  <td class="etag">1fbfa8d4cbc12bb74a1f65c17e85f182ec6239bf8f72d8c71e18fcab9c0effcd</td>
+               </tr>
+               <tr>
+                  <td class="key">sdm8manu.csv</td>
+                  <td class="view"><a class="datapipes" href="//datapipes.okfnlabs.org/csv/html/?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm8manu.csv">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm8manu.csv">download</a></td>
+                  <td class="size">1775</td>
+                  <td class="mtime">2020-11-22T13:15:54+00:00</td>
+                  <td class="etag">892bab7dad773b3ff739cf0afe27abfb</td>
+                  <td class="etag">440277b3d59eba6ad77beadc177663e0ffc671e92f6ee756a797f9c6463fda7e</td>
+               </tr>
+               <tr>
+                  <td class="key">swa2manu.drawio</td>
+                  <td class="view"><a class="drawio" href="//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=SWA2MANU.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fashenm%2Fblob%2Fmaster%2Fswa2manu.drawio">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/swa2manu.drawio">download</a></td>
+                  <td class="size">1188</td>
+                  <td class="mtime">2020-10-12T06:18:37+00:00</td>
+                  <td class="etag">0d9500a90ec9c1baa85ebbef7ce8ffec</td>
+                  <td class="etag">6f66a35338ee2dcb4c3330c7b76fd6d68fc56cce6d0f929b3920d04d79893622</td>
+               </tr>
+               <tr>
+                  <td class="key">sba1manu.csv</td>
+                  <td class="view"><a class="datapipes" href="//datapipes.okfnlabs.org/csv/html/?url=https://raw.githubusercontent.com/ashenm/blob/master/sba1manu.csv">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sba1manu.csv">download</a></td>
+                  <td class="size">73</td>
+                  <td class="mtime">2020-03-04T09:33:38+00:00</td>
+                  <td class="etag">793fb0936a6e8fe2f64726e2644340cb</td>
+                  <td class="etag">162b5475acff4c5eba94c73b3a383adee915719e6741c88ea49dd809f7c087bc</td>
+               </tr>
+               <tr>
+                  <td class="key">csa2safo.drawio</td>
+                  <td class="view"><a class="drawio" href="//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=CSA2SAFO.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fashenm%2Fblob%2Fmaster%2Fcsa2safo.drawio">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/csa2safo.drawio">download</a></td>
+                  <td class="size">1137</td>
+                  <td class="mtime">2020-04-18T07:46:46+00:00</td>
+                  <td class="etag">d12050952e7fa69167356b6a35f15ba6</td>
+                  <td class="etag">070a6aa3e1d56b740040d68acf86c5957e4d5199ef6dcc91fdf0d33e94a8f537</td>
+               </tr>
+               <tr>
+                  <td class="key">spa1manu.jpg</td>
+                  <td class="view"><a href="/spa1manu.jpg">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/spa1manu.jpg">download</a></td>
+                  <td class="size">23553</td>
+                  <td class="mtime">2020-02-14T06:19:39+00:00</td>
+                  <td class="etag">2460a693fa9779425ac467178d69ff2b</td>
+                  <td class="etag">9fa604913970e5aa83846ba825d0e83bc14d3f83e5452207fd723798aa317eb0</td>
+               </tr>
+               <tr>
+                  <td class="key">swa23manu~4.png</td>
+                  <td class="view"><a href="/swa23manu~4.png">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/swa23manu~4.png">download</a></td>
+                  <td class="size">2846</td>
+                  <td class="mtime">2020-11-22T13:12:24+00:00</td>
+                  <td class="etag">9f25231775c24ea5e116e7e613125f84</td>
+                  <td class="etag">a22dc76a3e7a583fe748b7a29624fd650e8f4d1fd686551ea332f627d5bf5923</td>
+               </tr>
+               <tr>
+                  <td class="key">swa11manu.drawio</td>
+                  <td class="view"><a class="drawio" href="//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=SWA11MANU.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fashenm%2Fblob%2Fmaster%2Fswa11manu.drawio">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/swa11manu.drawio">download</a></td>
+                  <td class="size">1409</td>
+                  <td class="mtime">2020-10-31T07:56:17+00:00</td>
+                  <td class="etag">5680e86249bd8681fde9f5bb63005bed</td>
+                  <td class="etag">8febdf73a962fc82b65aff460a06510716eeb5b9accf73762d182c21df1e5676</td>
+               </tr>
+               <tr>
+                  <td class="key">sdm7manu~3.csv</td>
+                  <td class="view"><a class="datapipes" href="//datapipes.okfnlabs.org/csv/html/?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm7manu~3.csv">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm7manu~3.csv">download</a></td>
+                  <td class="size">1235</td>
+                  <td class="mtime">2020-11-14T09:25:35+00:00</td>
+                  <td class="etag">ca6219481c5d994acb7dc1d619ae3c44</td>
+                  <td class="etag">845b18ae700e761f870a95cfbc1e6db6d9299797dd4fb37f80427e766bffd8da</td>
+               </tr>
+               <tr>
+                  <td class="key">sdm11manu~1.csv</td>
+                  <td class="view"><a class="datapipes" href="//datapipes.okfnlabs.org/csv/html/?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm11manu~1.csv">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm11manu~1.csv">download</a></td>
+                  <td class="size">1711</td>
+                  <td class="mtime">2020-12-02T13:30:12+00:00</td>
+                  <td class="etag">eed30adbe11bdf71db81c104cef9daff</td>
+                  <td class="etag">c26d5c9785da415c8853d9369426690660a78d13b65db75affe33be2b95d97b7</td>
+               </tr>
+               <tr>
+                  <td class="key">csa1safo.drawio</td>
+                  <td class="view"><a class="drawio" href="//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=CSA1SAFO.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fashenm%2Fblob%2Fmaster%2Fcsa1safo.drawio">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/csa1safo.drawio">download</a></td>
+                  <td class="size">1141</td>
+                  <td class="mtime">2020-04-18T07:45:45+00:00</td>
+                  <td class="etag">c06bfbd68f31ccdbbb26ac8fed3aa2f0</td>
+                  <td class="etag">a8fc6d57b87f0f3725601b33e330f994c880da671107b0a1628e7507b734ac28</td>
+               </tr>
+               <tr>
+                  <td class="key">swa21manu.drawio</td>
+                  <td class="view"><a class="drawio" href="//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=SWA21MANU.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fashenm%2Fblob%2Fmaster%2Fswa21manu.drawio">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/swa21manu.drawio">download</a></td>
+                  <td class="size">18729</td>
+                  <td class="mtime">2020-11-07T12:56:18+00:00</td>
+                  <td class="etag">56b7a94c150f3c90c7f9afcc246b99cd</td>
+                  <td class="etag">32b29d94ca9dc58be50c645bcd3ea59adc2c7ad04c16d0fb68dc3bf4c3f8db63</td>
+               </tr>
+               <tr>
+                  <td class="key">sdb1surm.csv</td>
+                  <td class="view"><a class="datapipes" href="//datapipes.okfnlabs.org/csv/html/?url=https://raw.githubusercontent.com/ashenm/blob/master/sdb1surm.csv">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sdb1surm.csv">download</a></td>
+                  <td class="size">190</td>
+                  <td class="mtime">2020-10-23T02:16:56+00:00</td>
+                  <td class="etag">9463aeb822bbe1f3320bb98a5c1b2f5d</td>
+                  <td class="etag">20a4a50a41ea99ab28b04495114f4f9e34087af9bfc5718f1a86ca7fdc6aeb12</td>
+               </tr>
+               <tr>
+                  <td class="key">swa5manu.htm</td>
+                  <td class="view"><a href="/swa5manu.htm">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/swa5manu.htm">download</a></td>
+                  <td class="size">2815</td>
+                  <td class="mtime">2020-02-25T15:46:53+00:00</td>
+                  <td class="etag">b12914a984b45483bf3b78fea9a7de14</td>
+                  <td class="etag">eef815476b33747c5e23221e07ec91ce1eb6293646f192fc79ac654b849cef7f</td>
+               </tr>
+               <tr>
+                  <td class="key">sdm11tldr.xltx</td>
+                  <td class="view"></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm11tldr.xltx">download</a></td>
+                  <td class="size">23643</td>
+                  <td class="mtime">2020-12-06T09:14:47+00:00</td>
+                  <td class="etag">88ea1ccbda688be29f38a8d806fc584c</td>
+                  <td class="etag">b0bec2a3dfcc0f0e35a59f62ef63d43e980c8b249a2bfb30274cc7f2ac8c6fdf</td>
+               </tr>
+               <tr>
+                  <td class="key">sdb1manu.csv</td>
+                  <td class="view"><a class="datapipes" href="//datapipes.okfnlabs.org/csv/html/?url=https://raw.githubusercontent.com/ashenm/blob/master/sdb1manu.csv">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sdb1manu.csv">download</a></td>
+                  <td class="size">2069</td>
+                  <td class="mtime">2020-02-19T15:37:57+00:00</td>
+                  <td class="etag">f93fe615eed368ebfeae0b4b449eabd5</td>
+                  <td class="etag">ec21f32b7df61422d76d7867d089a551f2a3015cfd7d082d6694a8e27e5a20d2</td>
+               </tr>
+               <tr>
+                  <td class="key">swa23manu~6.png</td>
+                  <td class="view"><a href="/swa23manu~6.png">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/swa23manu~6.png">download</a></td>
+                  <td class="size">2628</td>
+                  <td class="mtime">2020-11-22T13:12:38+00:00</td>
+                  <td class="etag">ea4eadd28c88720a6bb6df849a860b96</td>
+                  <td class="etag">db770a12031489423791bdd0fb9a8fcd67b1ffaa4258a62993df1d00b8059929</td>
+               </tr>
+               <tr>
+                  <td class="key">swa23manu~8.jpg</td>
+                  <td class="view"><a href="/swa23manu~8.jpg">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/swa23manu~8.jpg">download</a></td>
+                  <td class="size">1007650</td>
+                  <td class="mtime">2020-11-22T13:13:43+00:00</td>
+                  <td class="etag">f52cd1ce69db4e10af2847c44ace1c2e</td>
+                  <td class="etag">9d7424d07a990b8477124452c943b1f44791e51cdaec72119a8bccd36629f9ce</td>
+               </tr>
+               <tr>
+                  <td class="key">swa22manu.png</td>
+                  <td class="view"><a href="/swa22manu.png">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/swa22manu.png">download</a></td>
+                  <td class="size">217314</td>
+                  <td class="mtime">2020-11-12T10:47:03+00:00</td>
+                  <td class="etag">f1076dfd36f9d5b01e19acc12a42f398</td>
+                  <td class="etag">982c300744e1386b71632aab44c3a24aab3f520af6bce54d9f9538629d329739</td>
+               </tr>
+               <tr>
+                  <td class="key">sdm11manu~2.csv</td>
+                  <td class="view"><a class="datapipes" href="//datapipes.okfnlabs.org/csv/html/?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm11manu~2.csv">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm11manu~2.csv">download</a></td>
+                  <td class="size">200</td>
+                  <td class="mtime">2020-11-28T10:46:19+00:00</td>
+                  <td class="etag">cd41ef853629667f10e69b441d6fda9f</td>
+                  <td class="etag">1f2925a8077fa924fc4187abb38b7a0dbbc293bc2308956a84ea1989ddcfaf11</td>
+               </tr>
+               <tr>
+                  <td class="key">swa23manu~3.png</td>
+                  <td class="view"><a href="/swa23manu~3.png">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/swa23manu~3.png">download</a></td>
+                  <td class="size">1163</td>
+                  <td class="mtime">2020-11-22T13:12:18+00:00</td>
+                  <td class="etag">b2516258753d898c4fe0e4c18d53bd01</td>
+                  <td class="etag">2965f5a6bd9ce5e6b82c5f9cbcef22f7a321c27902ae43b04cec75b30446cfcd</td>
+               </tr>
+               <tr>
+                  <td class="key">isa1spec.drawio</td>
+                  <td class="view"><a class="drawio" href="//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=ISA1SPEC.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fashenm%2Fblob%2Fmaster%2Fisa1spec.drawio">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/isa1spec.drawio">download</a></td>
+                  <td class="size">3150</td>
+                  <td class="mtime">2020-04-21T05:30:21+00:00</td>
+                  <td class="etag">26c74a96bcaeb691ab44a3e6f9461742</td>
+                  <td class="etag">2698965d9d392687742467a560ef6ce3a54e9684e97167db507ed97754a966f2</td>
+               </tr>
+               <tr>
+                  <td class="key">sdm1manu.csv</td>
+                  <td class="view"><a class="datapipes" href="//datapipes.okfnlabs.org/csv/html/?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm1manu.csv">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm1manu.csv">download</a></td>
+                  <td class="size">1052</td>
+                  <td class="mtime">2020-02-08T07:04:34+00:00</td>
+                  <td class="etag">3ac9633df4bebbfa3696f65912f5a407</td>
+                  <td class="etag">93eb016bf2def6556683d178ce378c4cdc41d3a10335b418de7b5d2e328fa2f7</td>
+               </tr>
+               <tr>
+                  <td class="key">sdm11tldr.pdf</td>
+                  <td class="view"><a class="render" href="//render.githubusercontent.com/view/pdf?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm11tldr.pdf">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm11tldr.pdf">download</a></td>
+                  <td class="size">307069</td>
+                  <td class="mtime">2020-12-06T09:16:14+00:00</td>
+                  <td class="etag">eb6c5b3363d8acf119dabb615e9011d7</td>
+                  <td class="etag">2aaeeda853a4dca433c5714a10252af715dc39edf197aefd468ffdcd51a61f05</td>
+               </tr>
+               <tr>
+                  <td class="key">sdm5manu.csv</td>
+                  <td class="view"><a class="datapipes" href="//datapipes.okfnlabs.org/csv/html/?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm5manu.csv">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm5manu.csv">download</a></td>
+                  <td class="size">902</td>
+                  <td class="mtime">2020-02-26T05:53:31+00:00</td>
+                  <td class="etag">94386f1bb17ceda580001fd69ba722cf</td>
+                  <td class="etag">377d3eac30166a817acd8ec9e69abd29b999d2d7bc86202a2a751d2bd552f222</td>
+               </tr>
+               <tr>
+                  <td class="key">swa5manu.drawio</td>
+                  <td class="view"><a class="drawio" href="//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=SWA5MANU.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fashenm%2Fblob%2Fmaster%2Fswa5manu.drawio">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/swa5manu.drawio">download</a></td>
+                  <td class="size">1296</td>
+                  <td class="mtime">2020-10-31T07:13:17+00:00</td>
+                  <td class="etag">dd37bef456ffa045e42039d4f5ff9cff</td>
+                  <td class="etag">da869d4f2e132f83a22fd506061ae07659b691cfd9412dd53fb43e7b19b28b71</td>
+               </tr>
+               <tr>
+                  <td class="key">sca4manu.txt</td>
+                  <td class="view"><a class="raw" href="//raw.githubusercontent.com/ashenm/blob/master/sca4manu.txt">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sca4manu.txt">download</a></td>
+                  <td class="size">4550</td>
+                  <td class="mtime">2020-01-17T05:43:11+00:00</td>
+                  <td class="etag">38576d2b20f7a9b3a0d8b8eea9714482</td>
+                  <td class="etag">2f9c3de9f6d05993b702ff2e2338869efb3c70dfc29d38056bb0563d86037569</td>
+               </tr>
+               <tr>
+                  <td class="key">sba2manu.csv</td>
+                  <td class="view"><a class="datapipes" href="//datapipes.okfnlabs.org/csv/html/?url=https://raw.githubusercontent.com/ashenm/blob/master/sba2manu.csv">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sba2manu.csv">download</a></td>
+                  <td class="size">73</td>
+                  <td class="mtime">2020-03-04T10:04:32+00:00</td>
+                  <td class="etag">793fb0936a6e8fe2f64726e2644340cb</td>
+                  <td class="etag">162b5475acff4c5eba94c73b3a383adee915719e6741c88ea49dd809f7c087bc</td>
+               </tr>
+               <tr>
+                  <td class="key">swa17manu.drawio</td>
+                  <td class="view"><a class="drawio" href="//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=SWA17MANU.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fashenm%2Fblob%2Fmaster%2Fswa17manu.drawio">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/swa17manu.drawio">download</a></td>
+                  <td class="size">1137</td>
+                  <td class="mtime">2020-11-01T08:55:07+00:00</td>
+                  <td class="etag">6675f0c5beb485598aaaca7b6c0661cc</td>
+                  <td class="etag">ff052b2d35554cd8a275d53363296368570f04b2ba4d96728ec3f6f073911ee9</td>
+               </tr>
+               <tr>
+                  <td class="key">sdb11manu~2.csv</td>
+                  <td class="view"><a class="datapipes" href="//datapipes.okfnlabs.org/csv/html/?url=https://raw.githubusercontent.com/ashenm/blob/master/sdb11manu~2.csv">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sdb11manu~2.csv">download</a></td>
+                  <td class="size">837</td>
+                  <td class="mtime">2020-10-17T10:19:46+00:00</td>
+                  <td class="etag">40337ec1a6e98fb7adc3b3b9d7641b05</td>
+                  <td class="etag">238fc13bcb6091d359054969d2082fc8eea4a22bda02d551fa86e6d5d5ac976b</td>
+               </tr>
+               <tr>
+                  <td class="key">swa2pset.html</td>
+                  <td class="view"><a href="/swa2pset.html">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/swa2pset.html">download</a></td>
+                  <td class="size">906</td>
+                  <td class="mtime">2020-10-24T10:58:18+00:00</td>
+                  <td class="etag">927abb892ecae9e9d40aea9f85bb1284</td>
+                  <td class="etag">a85d153ccef04b14c028e31e8e04864a52f79b25ffa468393836430eedba9f99</td>
+               </tr>
+               <tr>
+                  <td class="key">sdm4seed.csv</td>
+                  <td class="view"><a class="datapipes" href="//datapipes.okfnlabs.org/csv/html/?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm4seed.csv">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm4seed.csv">download</a></td>
+                  <td class="size">3552</td>
+                  <td class="mtime">2020-11-07T12:13:05+00:00</td>
+                  <td class="etag">39ae4f1ab6ed161576e570b6c06bb720</td>
+                  <td class="etag">80d7406ef1b2b4a52a6322f463a5383542dbaa2d7a77c75ee7f5ab0b8e854704</td>
+               </tr>
+               <tr>
+                  <td class="key">sdb11manu~1.csv</td>
+                  <td class="view"><a class="datapipes" href="//datapipes.okfnlabs.org/csv/html/?url=https://raw.githubusercontent.com/ashenm/blob/master/sdb11manu~1.csv">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sdb11manu~1.csv">download</a></td>
+                  <td class="size">11925</td>
+                  <td class="mtime">2020-10-15T10:40:50+00:00</td>
+                  <td class="etag">285c3be65f9c9bbdc00d134fbb48c215</td>
+                  <td class="etag">578953058856058a0a89432d266a1d1bc15ddf7cfa82452deea49cd052dcce50</td>
+               </tr>
+               <tr>
+                  <td class="key">swa1pset.html</td>
+                  <td class="view"><a href="/swa1pset.html">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/swa1pset.html">download</a></td>
+                  <td class="size">1338</td>
+                  <td class="mtime">2020-10-24T07:11:38+00:00</td>
+                  <td class="etag">3f93b6b2a37b7287158a2c1acb6482f1</td>
+                  <td class="etag">19dd2a9f2bf4915934647d341ba1a111094a6ad80cefd3475b70ed95ecc321e6</td>
+               </tr>
+               <tr>
+                  <td class="key">sca5manu.txt</td>
+                  <td class="view"><a class="raw" href="//raw.githubusercontent.com/ashenm/blob/master/sca5manu.txt">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sca5manu.txt">download</a></td>
+                  <td class="size">4290</td>
+                  <td class="mtime">2020-01-17T12:45:50+00:00</td>
+                  <td class="etag">7fd785a5c8e625d74a8a5a42b843831d</td>
+                  <td class="etag">4d80a6597849cbc9760f02391e723d167a5d1b8a4d91b490a25cc780f1165a53</td>
+               </tr>
+               <tr>
+                  <td class="key">swa1pset.drawio</td>
+                  <td class="view"><a class="drawio" href="//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=SWA1PSET.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fashenm%2Fblob%2Fmaster%2Fswa1pset.drawio">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/swa1pset.drawio">download</a></td>
+                  <td class="size">2373</td>
+                  <td class="mtime">2020-10-24T07:10:49+00:00</td>
+                  <td class="etag">cf48b149d8aeab5e53163f928828a4ee</td>
+                  <td class="etag">3c1bc76a574f10a4d47bc2732280f66245eef8058f49b9915fa1b6ba229d27e9</td>
+               </tr>
+               <tr>
+                  <td class="key">swa2pset.drawio</td>
+                  <td class="view"><a class="drawio" href="//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=SWA2PSET.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fashenm%2Fblob%2Fmaster%2Fswa2pset.drawio">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/swa2pset.drawio">download</a></td>
+                  <td class="size">1881</td>
+                  <td class="mtime">2020-10-24T10:57:55+00:00</td>
+                  <td class="etag">e544339d700ea38e835fabb1e0d739ff</td>
+                  <td class="etag">5cb5a340acaccd802c01f0f133eeb9985bfb165a38aa10ab9c52c7004e49f7f4</td>
+               </tr>
+               <tr>
+                  <td class="key">swa4manu.drawio</td>
+                  <td class="view"><a class="drawio" href="//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=SWA4MANU.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fashenm%2Fblob%2Fmaster%2Fswa4manu.drawio">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/swa4manu.drawio">download</a></td>
+                  <td class="size">1748</td>
+                  <td class="mtime">2020-10-31T07:12:28+00:00</td>
+                  <td class="etag">e80a958a4b81892d98717bcccefcdf53</td>
+                  <td class="etag">ce6afedd1479f2725d1bd91a9702459bb363b657c2e680445f14e8eb12129959</td>
+               </tr>
+               <tr>
+                  <td class="key">sad2diag.drawio</td>
+                  <td class="view"><a class="drawio" href="//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=SAD2DIAG.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fashenm%2Fblob%2Fmaster%2Fsad2diag.drawio">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sad2diag.drawio">download</a></td>
+                  <td class="size">2408</td>
+                  <td class="mtime">2020-03-11T05:16:09+00:00</td>
+                  <td class="etag">f0ec7920714f02e68eacfb9e8459ef2e</td>
+                  <td class="etag">de6bf830a5cce12c3466f3204f81f16e3c705d2d42303e74457d6d08ed293189</td>
+               </tr>
+               <tr>
+                  <td class="key">swa12manu.drawio</td>
+                  <td class="view"><a class="drawio" href="//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=SWA12MANU.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fashenm%2Fblob%2Fmaster%2Fswa12manu.drawio">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/swa12manu.drawio">download</a></td>
+                  <td class="size">1381</td>
+                  <td class="mtime">2020-10-31T07:58:13+00:00</td>
+                  <td class="etag">289471170d5c692013726ac8fa657a33</td>
+                  <td class="etag">1fbc105055ec8c3a9b0e79e39c822982bdeb6551be033c2388d0abcf9dd1d781</td>
+               </tr>
+               <tr>
+                  <td class="key">sdm7manu~1.csv</td>
+                  <td class="view"><a class="datapipes" href="//datapipes.okfnlabs.org/csv/html/?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm7manu~1.csv">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm7manu~1.csv">download</a></td>
+                  <td class="size">563</td>
+                  <td class="mtime">2020-11-15T04:35:35+00:00</td>
+                  <td class="etag">b73648fb0883f1b6364635bc18a6411a</td>
+                  <td class="etag">a0cdf138a3da86473c76dee513ed52e2c99988c537e6c54349567de466bbce12</td>
+               </tr>
+               <tr>
+                  <td class="key">swa23manu~7.png</td>
+                  <td class="view"><a href="/swa23manu~7.png">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/swa23manu~7.png">download</a></td>
+                  <td class="size">3084</td>
+                  <td class="mtime">2020-11-22T13:12:46+00:00</td>
+                  <td class="etag">40b743d0aa630b81b116521ef1c25ed6</td>
+                  <td class="etag">0063de49edffc260f7e37ee5f57ce56f6c8b1a1ec48271198da86757016ad6f0</td>
+               </tr>
+               <tr>
+                  <td class="key">spa5manu.rtf</td>
+                  <td class="view"><a class="gview" href="//docs.google.com/viewer?url=https://raw.githubusercontent.com/ashenm/blob/master/spa5manu.rtf">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/spa5manu.rtf">download</a></td>
+                  <td class="size">38356</td>
+                  <td class="mtime">2020-02-22T11:16:29+00:00</td>
+                  <td class="etag">bcc05786e7fef33b8bcfae14f47c1848</td>
+                  <td class="etag">60d4678107db7bf3a393750b52caaba3d442a755c85351271bc3e27ed0f49720</td>
+               </tr>
+               <tr>
+                  <td class="key">sdm4manu.csv</td>
+                  <td class="view"><a class="datapipes" href="//datapipes.okfnlabs.org/csv/html/?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm4manu.csv">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm4manu.csv">download</a></td>
+                  <td class="size">3561</td>
+                  <td class="mtime">2020-02-26T05:53:24+00:00</td>
+                  <td class="etag">42f785a52936683bb94d52ff9045a8c2</td>
+                  <td class="etag">36366d09509ce944fbc80672102debf985842b99de5e5c3f22bcb1d525d6b179</td>
+               </tr>
+               <tr>
+                  <td class="key">swa24manu.html</td>
+                  <td class="view"><a href="/swa24manu.html">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/swa24manu.html">download</a></td>
+                  <td class="size">1372</td>
+                  <td class="mtime">2024-01-02T03:49:06+00:00</td>
+                  <td class="etag">edf63c7a01b9cecc6d070a3b83e6d202</td>
+                  <td class="etag">c1986b0d20092069b22ef0f7584bb5c8ef8693eea468223dbfbb7f5450367f84</td>
+               </tr>
+               <tr>
+                  <td class="key">swa16manu.drawio</td>
+                  <td class="view"><a class="drawio" href="//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=SWA16MANU.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fashenm%2Fblob%2Fmaster%2Fswa16manu.drawio">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/swa16manu.drawio">download</a></td>
+                  <td class="size">1433</td>
+                  <td class="mtime">2020-11-01T08:54:45+00:00</td>
+                  <td class="etag">52695a81c170413d749a3fd614fdbd02</td>
+                  <td class="etag">b83ec6c6b1760bf3c11bfa7f4628e7b945b880cb2efa703f7a8788897004c5c0</td>
+               </tr>
+               <tr>
+                  <td class="key">sad1diag.drawio</td>
+                  <td class="view"><a class="drawio" href="//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=SAD1DIAG.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fashenm%2Fblob%2Fmaster%2Fsad1diag.drawio">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sad1diag.drawio">download</a></td>
+                  <td class="size">1996</td>
+                  <td class="mtime">2020-03-11T05:16:09+00:00</td>
+                  <td class="etag">98972cb2dfcfb480c234ee0316afd882</td>
+                  <td class="etag">448bba39ec1e5dc4ca155e7be3dcfe89425aa82eefefff273e2220ef0e809514</td>
+               </tr>
+               <tr>
+                  <td class="key">sad3pseu.drawio</td>
+                  <td class="view"><a class="drawio" href="//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=SAD3PSEU.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fashenm%2Fblob%2Fmaster%2Fsad3pseu.drawio">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sad3pseu.drawio">download</a></td>
+                  <td class="size">2128</td>
+                  <td class="mtime">2020-03-11T08:18:40+00:00</td>
+                  <td class="etag">d996e78d0e661d6abf65e82d2cfa35ca</td>
+                  <td class="etag">02c624c578998e2806927325fb9d9843f2da071026a8ea27eb7f4185ad40433c</td>
+               </tr>
+               <tr>
+                  <td class="key">sdm6manu.csv</td>
+                  <td class="view"><a class="datapipes" href="//datapipes.okfnlabs.org/csv/html/?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm6manu.csv">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm6manu.csv">download</a></td>
+                  <td class="size">848</td>
+                  <td class="mtime">2020-11-07T13:38:53+00:00</td>
+                  <td class="etag">44f9e0c69577ef2742803f2339355fa9</td>
+                  <td class="etag">65d0c8c9e040d69b9ae64698d27cc23d25d9e991b65b660e0d41bf0eee40283a</td>
+               </tr>
+               <tr>
+                  <td class="key">sba4manu.csv</td>
+                  <td class="view"><a class="datapipes" href="//datapipes.okfnlabs.org/csv/html/?url=https://raw.githubusercontent.com/ashenm/blob/master/sba4manu.csv">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sba4manu.csv">download</a></td>
+                  <td class="size">63</td>
+                  <td class="mtime">2020-03-04T10:18:53+00:00</td>
+                  <td class="etag">9c2ffd47dd02787ab5ff4f7c2f713bd9</td>
+                  <td class="etag">f291395760faa73ad3c02d4f29840a617c3c62b95db9be16a8c20a6341e8f895</td>
+               </tr>
+               <tr>
+                  <td class="key">sdm2manu.csv</td>
+                  <td class="view"><a class="datapipes" href="//datapipes.okfnlabs.org/csv/html/?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm2manu.csv">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/sdm2manu.csv">download</a></td>
+                  <td class="size">3338</td>
+                  <td class="mtime">2020-02-13T04:03:37+00:00</td>
+                  <td class="etag">bc4db202b4a34a7ded81e3590d547f56</td>
+                  <td class="etag">128acbd0192fcae40dda267053df43690f2e3bf4ccc2d84c29524289a7fc8fc9</td>
+               </tr>
+               <tr>
+                  <td class="key">swa1manu.drawio</td>
+                  <td class="view"><a class="drawio" href="//www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1&amp;title=SWA1MANU.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fashenm%2Fblob%2Fmaster%2Fswa1manu.drawio">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/swa1manu.drawio">download</a></td>
+                  <td class="size">1236</td>
+                  <td class="mtime">2020-10-12T06:18:12+00:00</td>
+                  <td class="etag">bd0901d492bd24196e8b3e28e2967ebd</td>
+                  <td class="etag">c64ffd1f2381afe8792371ff83f5b47806d169c30959bfe0a12ae2ceadbb7706</td>
+               </tr>
+               <tr>
+                  <td class="key">swa21manu.jpg</td>
+                  <td class="view"><a href="/swa21manu.jpg">view</a></td>
+                  <td class="download"><a class="download" href="//ashenm.herokuapp.com/seize?url=https://raw.githubusercontent.com/ashenm/blob/master/swa21manu.jpg">download</a></td>
+                  <td class="size">12243</td>
+                  <td class="mtime">2020-11-07T12:56:37+00:00</td>
+                  <td class="etag">ddbc1a59c356501149692a299016ec94</td>
+                  <td class="etag">fbe44970193b8f97362c320767d8e48672b7f8c7bb20f7958f9e7847097d00d7</td>
+               </tr>
+            </tbody>
+            <tfoot></tfoot>
+         </table>
+      </main>
+      <footer></footer>
+   </body>
+</html>
