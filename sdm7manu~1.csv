@@ -1,0 +1,28 @@
+INVOICE,,,,,
+From:,,,,,To:
+Tawara Cycles,,,,,The Progressive School
+1643 Briskway Avenue,,,,,637 Main Highway
+Tawara,,,,,Tawara
+8765-120,,,,,8765-420
+
+Invoice created by:,,,,,
+<candidate details here>,,,,,
+
+Number of items,,,,,
+Number of units,,,,,
+
+Discount Percentages,,,,,
+Discount A,0.05,,,,
+Discount B,0.1,,,,
+Discount C,0.15,,,,
+
+Item,Item Code,Type,Unit Cost,Units,Item Total
+Trail Special,M0027,,,5,
+Roadster 3,R0021,,,5,
+Diamond Mountain,M0018,,,10,
+Trekkerz,H0044,,,10,
+Trekkerz Topper,H0046,,,1,
+
+Sub Total,,,,,
+Discount Amount,,,,,
+Invoice Total,,,,,
